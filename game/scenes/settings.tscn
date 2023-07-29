@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://ttelsexyu75q"]
+
+[sub_resource type="Theme" id="Theme_s8y1p"]
+
+[node name="SettingsWindow" type="SettingsWindow"]
+title = "Settings"
+initial_position = 1
+size = Vector2i(300, 150)
+theme = SubResource("Theme_s8y1p")
+
+[node name="Container" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Grid" type="GridContainer" parent="Container"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="MusicLabel" type="Label" parent="Container/Grid"]
+layout_mode = 2
+text = "Music"
+
+[node name="MusicSlider" type="HSlider" parent="Container/Grid"]
+layout_mode = 2
+size_flags_horizontal = 3
+value = 80.0
+
+[node name="SoundLabel" type="Label" parent="Container/Grid"]
+layout_mode = 2
+text = "Sound"
+
+[node name="SoundSlider" type="HSlider" parent="Container/Grid"]
+layout_mode = 2
+value = 60.0
+
+[node name="SizeLabel" type="Label" parent="Container/Grid"]
+layout_mode = 2
+text = "Resolution"
+
+[node name="SizeButton" type="MenuButton" parent="Container/Grid"]
+layout_mode = 2
+text = "1280x720"
+
+[node name="Save" type="Button" parent="Container"]
+layout_mode = 2
+text = "Save"
