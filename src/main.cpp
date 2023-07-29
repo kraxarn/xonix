@@ -5,6 +5,7 @@
 
 #include "nodes/player.hpp"
 #include "nodes/menu.hpp"
+#include "nodes/settingswindow.hpp"
 
 void initialize_module(godot::ModuleInitializationLevel level)
 {
@@ -15,6 +16,7 @@ void initialize_module(godot::ModuleInitializationLevel level)
 
 	godot::ClassDB::register_class<Player>();
 	godot::ClassDB::register_class<Menu>();
+	godot::ClassDB::register_class<SettingsWindow>();
 }
 
 void terminate_module(godot::ModuleInitializationLevel level)
