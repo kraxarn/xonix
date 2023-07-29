@@ -4,6 +4,7 @@
 #include <godot_cpp/godot.hpp>
 
 #include "nodes/player.hpp"
+#include "nodes/menu.hpp"
 
 void initialize_module(godot::ModuleInitializationLevel level)
 {
@@ -13,6 +14,7 @@ void initialize_module(godot::ModuleInitializationLevel level)
 	}
 
 	godot::ClassDB::register_class<Player>();
+	godot::ClassDB::register_class<Menu>();
 }
 
 void terminate_module(godot::ModuleInitializationLevel level)
