@@ -1,0 +1,16 @@
+# Godot
+game/.godot/
+
+# Exported projects
+export/
+
+# IntelliJ / CLion
+.idea/
+
+# CMake
+cmake-build-*/
+
+# Built binaries
+game/bin/*.so
+game/bin/*.dylib
+game/bin/*.dll
