@@ -60,6 +60,7 @@ godot_os = godot_edition[:godot_edition.index(".")]
 match godot_os:
 	case "linux":
 		godot_path = f"godot/{godot_name}_linux.x86_64"
+		subprocess.run(["chmod", "+x", godot_path])
 	case "macos":
 		godot_path = "godot/Godot.app/Contents/MacOS/Godot"
 		subprocess.run(["chmod", "+x", godot_path])
