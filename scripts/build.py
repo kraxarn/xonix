@@ -64,11 +64,16 @@ for line in download_str(sums_url).splitlines():
 
 def verify(filename: str, name: str):
 	print(filename)
-	file_hash: str
+	sha512 = hashlib.sha512()
 	with open(filename, "rb") as file:
-		file_hash = hashlib.file_digest(file, "sha512").hexdigest()
+		while True:
+			data = file.read(65536)  # 64 kb
+			if not data:
+				break
+			sha512.update(data)
+	file_hash = sha512.hexdigest()
 	if not file_hash == hashes[name]:
-		sys.exit(f"error: invalid checksum: {name}")
+		sys.exit(f"error: invalid checksum: {name} ({file_hash})")
 
 
 download_file(engine_url, "godot.zip")
