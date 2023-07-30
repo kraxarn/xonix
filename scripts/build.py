@@ -121,7 +121,6 @@ for line in cmake_build:
 
 godot_build = run([
 	godot_path,
-	"--debug",
 	"--headless"
 	"--path", "game",
 	"--export-release", godot_preset, "."
