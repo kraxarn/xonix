@@ -3,6 +3,7 @@
 #include <godot_cpp/classes/node.hpp>
 #include <godot_cpp/classes/button.hpp>
 #include <godot_cpp/classes/window.hpp>
+#include <godot_cpp/classes/label.hpp>
 
 class Menu: public godot::Node
 {
@@ -25,4 +26,6 @@ private:
 	godot::Button *settings;
 	godot::Button *quit_game;
 	godot::Window *settings_window;
+
+	static auto get_system_info() -> godot::String;
 };

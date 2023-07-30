@@ -60,3 +60,14 @@ text = "Quit Game :("
 
 [node name="SettingsWindow" parent="." instance=ExtResource("2_sot3l")]
 visible = false
+
+[node name="DebugInfo" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -40.0
+offset_right = 56.0
+offset_bottom = -14.0
+grow_vertical = 0
+text = "..."
