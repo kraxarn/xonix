@@ -63,7 +63,7 @@ for line in download_str(sums_url).splitlines():
 
 
 def verify(filename: str, name: str):
-	print(filename)
+	print(f"{name} ({filename})")
 	sha512 = hashlib.sha512()
 	with open(filename, "rb") as file:
 		while True:
