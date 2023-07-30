@@ -98,9 +98,6 @@ match godot_os:
 	case _:
 		sys.exit(f"error: unknown os: {godot_os}")
 
-godot_exec_version = run([godot_path, "--version"])
-print(f"Godot {next(godot_exec_version)}")
-
 cmake_configure = run([
 	"cmake", ".",
 	f"-DCMAKE_BUILD_TYPE={build_type}",
