@@ -52,8 +52,8 @@ def extract(source: str, target: str):
 
 def run(args: typing.Sequence[str]) -> typing.Iterator[str]:
 	with subprocess.Popen(args, stdout=subprocess.PIPE) as process:
-		for line in process.stdout:
-			yield line.decode()
+		for out in process.stdout:
+			yield out.decode()
 
 
 hashes: dict[str, str] = {}
