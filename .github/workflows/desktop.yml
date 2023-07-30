@@ -5,18 +5,27 @@ on: [ push, pull_request ]
 env:
   BUILD_TYPE: "Release"
   GODOT_VERSION: "4.1.1"
-  GODOT_EDITION: "linux.x86_64"
-  GODOT_PRESET: "Linux"
 
 jobs:
   build:
-    # Latest Ubuntu LTS
-    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Latest Ubuntu LTS
+          - os: ubuntu-22.04
+            edition: "linux.x86_64"
+            preset: "Linux"
+
+    runs-on: ${{matrix.os}}
 
     steps:
       - uses: actions/checkout@v2
 
       - name: Build
+        env:
+          GODOT_EDITION: ${{matrix.edition}}
+          GODOT_PRESET: ${{matrix.preset}}
         run: python scripts/build.py
 
       - name: Upload Artifact
