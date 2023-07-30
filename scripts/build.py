@@ -85,16 +85,20 @@ extract("templates.zip", "templates")
 verify("templates.zip", template_filename)
 
 godot_path: str
+export_name: str
 godot_os = godot_edition[:godot_edition.index(".")]
 match godot_os:
 	case "linux":
 		godot_path = f"godot/{godot_name}_linux.x86_64"
 		subprocess.run(["chmod", "+x", godot_path])
+		export_name = "xonix.x64_64"
 	case "macos":
 		godot_path = "godot/Godot.app/Contents/MacOS/Godot"
 		subprocess.run(["chmod", "+x", godot_path])
+		export_name = "xonix.zip"
 	case "win64":
 		godot_path = f"/godot/{godot_name}_win64.exe/{godot_name}_win64.exe"
+		export_name = "xonix.exe"
 	case _:
 		sys.exit(f"error: unknown os: {godot_os}")
 
@@ -119,9 +123,9 @@ for line in cmake_build:
 	print(line, end="")
 
 godot_build = run([
-	godot_path,
+	f"../{godot_path}",
 	"--headless"
-	"--export-release", godot_preset, "."
+	"--export-release", godot_preset, f"../export/{export_name}"
 ], "game")
 
 for line in godot_build:
