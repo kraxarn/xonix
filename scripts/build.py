@@ -105,7 +105,7 @@ cmake_configure = run([
 ])
 
 for line in cmake_configure:
-	print(line)
+	print(line, end="")
 
 cmake_build = run([
 	"cmake",
@@ -114,7 +114,7 @@ cmake_build = run([
 ])
 
 for line in cmake_build:
-	print(line)
+	print(line, end="")
 
 godot_build = run([
 	godot_path,
@@ -124,4 +124,4 @@ godot_build = run([
 ])
 
 for line in godot_build:
-	print(line)
+	print(line, end="")
