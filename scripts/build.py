@@ -93,5 +93,7 @@ for line in cmake_build:
 godot_build = run([
 	godot_path,
 	"--debug",
-	"--export-release", godot_preset, "game"
+	"--headless"
+	"--path", "game",
+	"--export-release", godot_preset, "."
 ])
