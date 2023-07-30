@@ -74,4 +74,13 @@ void SettingsWindow::_on_SizeButton_index_pressed(int index)
 {
 	const auto text = size_button->get_popup()->get_item_text(index);
 	size_button->set_text(text);
+
+	const auto parts = text.split("x");
+	const auto width = parts[0].to_int();
+	const auto height = parts[1].to_int();
+
+	get_tree()->get_root()->set_size({
+		static_cast<int32_t>(width),
+		static_cast<int32_t>(height),
+	});
 }
