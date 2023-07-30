@@ -126,3 +126,6 @@ godot_build = run([
 	"--path", "game",
 	"--export-release", godot_preset, "."
 ])
+
+for line in godot_build:
+	print(line)
