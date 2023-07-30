@@ -1,4 +1,5 @@
 #include "nodes/menu.hpp"
+#include "util.hpp"
 
 #include <godot_cpp/classes/scene_tree.hpp>
 #include <godot_cpp/classes/os.hpp>
@@ -38,8 +39,11 @@ void Menu::_ready()
 
 	settings_window = get_node<godot::Window>("SettingsWindow");
 
-	auto *debug_info = get_node<godot::Label>("DebugInfo");
-	debug_info->set_text(get_system_info());
+	if (!util::is_editor())
+	{
+		auto *debug_info = get_node<godot::Label>("DebugInfo");
+		debug_info->set_text(get_system_info());
+	}
 }
 
 void Menu::_on_StartGame_pressed()

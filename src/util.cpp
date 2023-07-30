@@ -1,5 +1,7 @@
 #include "util.hpp"
 
+#include <godot_cpp/classes/engine.hpp>
+
 auto util::to_vector2(const godot::Vector2i &vec2) -> godot::Vector2
 {
 	return {
@@ -38,4 +40,10 @@ auto util::format_size(int64_t bytes) -> godot::String
 	}
 
 	return godot::String("{size} {unit}").format(values);
+}
+
+auto util::is_editor() -> bool
+{
+	const auto *engine = godot::Engine::get_singleton();
+	return engine->is_editor_hint();
 }

@@ -11,6 +11,8 @@ public:
 
 	static auto format_size(int64_t bytes) -> godot::String;
 
+	static auto is_editor() -> bool;
+
 private:
 	util() = default;
 };
