@@ -6,6 +6,7 @@
 #include "nodes/player.hpp"
 #include "nodes/menu.hpp"
 #include "nodes/settingswindow.hpp"
+#include "nodes/perfmon.hpp"
 
 void initialize_module(godot::ModuleInitializationLevel level)
 {
@@ -17,6 +18,7 @@ void initialize_module(godot::ModuleInitializationLevel level)
 	godot::ClassDB::register_class<Player>();
 	godot::ClassDB::register_class<Menu>();
 	godot::ClassDB::register_class<SettingsWindow>();
+	godot::ClassDB::register_class<PerfMon>();
 }
 
 void terminate_module(godot::ModuleInitializationLevel level)

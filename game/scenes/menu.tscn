@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://d0idyqb3elo2n"]
+[gd_scene load_steps=6 format=3 uid="uid://d0idyqb3elo2n"]
 
 [ext_resource type="Theme" uid="uid://ca0p5qj0m3au8" path="res://themes/button.tres" id="1_af4so"]
+[ext_resource type="PackedScene" uid="uid://buku7dpvsvnyd" path="res://scenes/perfmon.tscn" id="1_um4v7"]
 [ext_resource type="PackedScene" uid="uid://ttelsexyu75q" path="res://scenes/settings.tscn" id="2_sot3l"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_myelk"]
@@ -11,10 +12,14 @@ VBoxContainer/constants/separation = 16
 
 [node name="Menu" type="Menu"]
 
+[node name="PerfMon" parent="." instance=ExtResource("1_um4v7")]
+offset_right = 123.0
+offset_bottom = 106.0
+
 [node name="Title" type="Label" parent="."]
-offset_left = 64.0
+offset_left = 128.0
 offset_top = 64.0
-offset_right = 178.0
+offset_right = 242.0
 offset_bottom = 125.0
 text = "Xonix"
 label_settings = SubResource("LabelSettings_myelk")

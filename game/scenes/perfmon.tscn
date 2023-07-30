@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://buku7dpvsvnyd"]
+
+[sub_resource type="Theme" id="Theme_xcsdw"]
+GridContainer/constants/h_separation = 6
+GridContainer/constants/v_separation = -6
+
+[node name="PerfMon" type="PerfMon"]
+theme = SubResource("Theme_xcsdw")
+columns = 2
+
+[node name="FpsLabel" type="Label" parent="."]
+layout_mode = 2
+text = "FPS"
+
+[node name="Fps" type="Label" parent="."]
+layout_mode = 2
+text = "0"
+
+[node name="ProcessLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Process"
+
+[node name="Process" type="Label" parent="."]
+layout_mode = 2
+text = "0 ms"
+
+[node name="ObjectCountLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Objects"
+
+[node name="ObjectCount" type="Label" parent="."]
+layout_mode = 2
+text = "0"
+
+[node name="ResourceCountLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Resources"
+
+[node name="ResourceCount" type="Label" parent="."]
+layout_mode = 2
+text = "0"
+
+[node name="NodeCountLabel" type="Label" parent="."]
+layout_mode = 2
+text = "Nodes"
+
+[node name="NodeCount" type="Label" parent="."]
+layout_mode = 2
+text = "0"
