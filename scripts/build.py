@@ -50,8 +50,8 @@ def extract(source: str, target: str):
 		zip_file.extractall(target)
 
 
-def run(args: typing.Sequence[str]) -> typing.Iterator[str]:
-	with subprocess.Popen(args, stdout=subprocess.PIPE) as process:
+def run(args: typing.Sequence[str], cwd: str) -> typing.Iterator[str]:
+	with subprocess.Popen(args, cwd=cwd, stdout=subprocess.PIPE) as process:
 		for out in process.stdout:
 			yield out.decode()
 
@@ -98,11 +98,13 @@ match godot_os:
 	case _:
 		sys.exit(f"error: unknown os: {godot_os}")
 
+os.makedirs("build", exist_ok=True)
+
 cmake_configure = run([
-	"cmake", ".",
+	"cmake", "..",
 	f"-DCMAKE_BUILD_TYPE={build_type}",
 	"-DCMAKE_INSTALL_PREFIX=/usr",
-])
+], "build")
 
 for line in cmake_configure:
 	print(line, end="")
@@ -111,7 +113,7 @@ cmake_build = run([
 	"cmake",
 	"--build", ".",
 	"--config", build_type,
-])
+], "build")
 
 for line in cmake_build:
 	print(line, end="")
@@ -119,9 +121,8 @@ for line in cmake_build:
 godot_build = run([
 	godot_path,
 	"--headless"
-	"--path", "game",
 	"--export-release", godot_preset, "."
-])
+], "game")
 
 for line in godot_build:
 	print(line, end="")
