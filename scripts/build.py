@@ -1,3 +1,4 @@
+import hashlib
 import os
 import subprocess
 import sys
@@ -19,11 +20,14 @@ godot_preset = os.environ["GODOT_PRESET"]
 
 base_url = f"https://downloads.tuxfamily.org/godotengine/{godot_version}"
 godot_name = f"Godot_v{godot_version}-stable"
-engine_url = f"{base_url}/{godot_name}_{godot_edition}.zip"
-template_url = f"{base_url}/{godot_name}_export_templates.tpz"
+engine_filename = f"{godot_name}_{godot_edition}.zip"
+engine_url = f"{base_url}/{engine_filename}"
+template_filename = f"{godot_name}_export_templates.tpz"
+template_url = f"{base_url}/{template_filename}"
+sums_url = f"{base_url}/SHA512-SUMS.txt"
 
 
-def download(source: str, target: str):
+def download_file(source: str, target: str):
 	print(f"{source} => {target}")
 	if os.path.isfile(target):
 		return
@@ -31,6 +35,11 @@ def download(source: str, target: str):
 		with open(target, "wb") as file:
 			for chunk in response.iter_content(chunk_size=8192):
 				file.write(chunk)
+
+
+def download_str(source: str):
+	with requests.get(source) as response:
+		return response.text
 
 
 def extract(source: str, target: str):
@@ -47,13 +56,28 @@ def run(args: typing.Sequence[str]) -> typing.Iterator[str]:
 			yield line.decode()
 
 
-# TODO: Verify hashes
+hashes: dict[str, str] = {}
+for line in download_str(sums_url).splitlines():
+	parts = line.split("  ")
+	hashes[parts[1]] = parts[0]
 
-download(engine_url, "godot.zip")
+
+def verify(filename: str, name: str):
+	print(filename)
+	file_hash: str
+	with open(filename, "rb") as file:
+		file_hash = hashlib.file_digest(file, "sha512").hexdigest()
+	if not file_hash == hashes[name]:
+		sys.exit(f"error: invalid checksum: {name}")
+
+
+download_file(engine_url, "godot.zip")
 extract("godot.zip", "godot")
+verify("godot.zip", engine_filename)
 
-download(template_url, "templates.zip")
+download_file(template_url, "templates.zip")
 extract("templates.zip", "templates")
+verify("templates.zip", template_filename)
 
 godot_path: str
 godot_os = godot_edition[:godot_edition.index(".")]
