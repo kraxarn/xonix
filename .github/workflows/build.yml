@@ -5,7 +5,8 @@ on: [ push, pull_request ]
 env:
   BUILD_TYPE: "Release"
   GODOT_VERSION: "4.1.1"
-
+  GODOT_EDITION: "linux.x86_64"
+  GODOT_PRESET: "Linux"
 
 jobs:
   build:
@@ -15,8 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Configure CMake
-        run: cmake . -DCMAKE_BUILD_TYPE=$BUILD_TYPE -DCMAKE_INSTALL_PREFIX=/usr
-
       - name: Build
-        run: cmake --build . --config $BUILD_TYPE
+        run: python scripts/build.py
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: xonix
+          path: export
