@@ -22,6 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Cache CMake Dependencies
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: _deps
+          key: ${{matrix-edition}}-${{env.GODOT_VERSION}}-deps
+
       - name: Download Editor
         run: |
           python scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{matrix.edition}}"
