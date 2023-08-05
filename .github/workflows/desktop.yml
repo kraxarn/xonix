@@ -52,11 +52,11 @@ jobs:
         run: cmake --build . --config ${{env.BUILD_TYPE}}
 
       - name: Import Project
-        working-directory: ${{runner.workspace}}/game
+        working-directory: ${{runner.workspace}}/xonix/game
         run: ./godot --headless --editor --quit
 
       - name: Export
-        working-directory: ${{runner.workspace}}/game
+        working-directory: ${{runner.workspace}}/xonix/game
         run: ./godot --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
 
       - name: Upload Artifact
