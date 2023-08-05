@@ -27,7 +27,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: _deps
-          key: ${{matrix-edition}}-${{env.GODOT_VERSION}}-deps
+          key: ${{matrix.edition}}-${{env.GODOT_VERSION}}-deps
 
       - name: Download Editor
         run: |
