@@ -45,10 +45,12 @@ jobs:
         run: cmake --build . --config ${{env.BUILD_TYPE}}
 
       - name: Import Project
-        run: ./godot game --headless --editor --quit
+        working-directory: ${{runner.workspace}}/game
+        run: ./godot --headless --editor --quit
 
       - name: Export
-        run: ./godot game --headless --export-release "${{matrix.edition}}" "${{matrix.output}}"
+        working-directory: ${{runner.workspace}}/game
+        run: ./godot --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
