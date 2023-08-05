@@ -22,12 +22,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Cache CMake Dependencies
-        id: cache-deps
+      - name: Cache Godot
         uses: actions/cache@v3
         with:
-          path: _deps
-          key: ${{matrix.edition}}-${{env.GODOT_VERSION}}-deps
+          path: |
+            _deps
+            Godot*.zip
+          key: godot-${{env.GODOT_VERSION}}-${{matrix.edition}}
+
+      - name: Cache Export Templates
+        uses: actions/cache@v3
+        with:
+          path: Godot*export_templates.tpz
+          key: godot-${{env.GODOT_VERSION}}-export-templates
 
       - name: Download Editor
         run: |
