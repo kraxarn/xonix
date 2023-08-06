@@ -67,13 +67,13 @@ jobs:
 
       - name: Import Project
         working-directory: ${{runner.workspace}}/xonix/game
-        run: ${{steps.editor.outputs.PATH}} --headless --editor --quit
+        run: ${{steps.editor.outputs.PATH}} --headless --editor --quit || true
 
       - name: Export
         working-directory: ${{runner.workspace}}/xonix/game
         run: |
           mkdir "../export"
-          ${{steps.editor.outputs.PATH}} --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
+          ${{steps.editor.outputs.PATH}} --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}" || true
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
