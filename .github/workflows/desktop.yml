@@ -43,10 +43,17 @@ jobs:
         run: pip3 install requests
 
       - name: Download Editor
+        run: python3 scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{matrix.edition}}"
+
+      - name: Prepare Editor (Linux)
+        if: runner.os == "Linux"
         run: |
-          python3 scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{matrix.edition}}"
-          mv "Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" "./game/godot"
-          chmod +x "./game/godot"
+          mv "Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" "./godot"
+          chmod +x "./godot"
+
+      - name: Prepare Editor (macOS)
+        if: runner.os == "macOS"
+        run: chmod +x "./Godot.app/Contents/MacOS/Godot"
 
       - name: Download Export Templates
         run: python3 scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
@@ -59,13 +66,13 @@ jobs:
 
       - name: Import Project
         working-directory: ${{runner.workspace}}/xonix/game
-        run: ./godot --headless --editor --quit
+        run: godot --headless --editor --quit
 
       - name: Export
         working-directory: ${{runner.workspace}}/xonix/game
         run: |
           mkdir "../export"
-          ./godot --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
+          godot --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
