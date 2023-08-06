@@ -2,6 +2,7 @@ import argparse
 import hashlib
 import os
 import pathlib
+import shutil
 import sys
 import typing
 import zipfile
@@ -15,6 +16,7 @@ parser.add_argument("--godot-version", required=True)
 parser.add_argument("--godot-edition")
 parser.add_argument("--verify", type=bool, default=True)
 parser.add_argument("--extract", type=bool, default=True)
+parser.add_argument("--install", type=bool, default=True)
 
 args = parser.parse_args()
 godot_version: typing.Optional[str] = args.godot_version
@@ -93,3 +95,18 @@ if args.verify:
 
 if args.extract:
 	extract(download_filename)
+
+if args.type == "export-templates" and args.install:
+	template_path: pathlib.Path
+	match sys.platform:
+		case "linux":
+			template_path = pathlib.Path.home().joinpath(".local", "share", "godot", "export_templates")
+		case "darwin":
+			template_path = pathlib.Path.home().joinpath("Library", "Application Support", "Godot", "export_templates")
+		case "win32":
+			template_path = pathlib.Path.home().joinpath("AppData", "Local", "Godot", "export_templates")
+		case _:
+			sys.exit(f"unknown platform: {sys.platform}")
+	print(f"install: {template_path}")
+	os.makedirs(template_path)
+	shutil.move("templates", template_path.joinpath(f"{godot_version}.stable"))
