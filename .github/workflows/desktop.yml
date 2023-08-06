@@ -46,14 +46,18 @@ jobs:
         run: python3 scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{matrix.edition}}"
 
       - name: Prepare Editor (Linux)
+        id: editor
         if: runner.os == 'Linux'
         run: |
-          mv "Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" "./godot"
-          chmod +x "./godot"
+          chmod +x "./Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64"
+          echo "PATH=./Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" >> "$GITHUB_OUTPUT"
 
       - name: Prepare Editor (macOS)
+        id: editor
         if: runner.os == 'macOS'
-        run: chmod +x "./Godot.app/Contents/MacOS/Godot"
+        run: |
+          chmod +x "./Godot.app/Contents/MacOS/Godot"
+          echo "PATH=./Godot.app/Contents/MacOS/Godot" >> "$GITHUB_OUTPUT"
 
       - name: Download Export Templates
         run: python3 scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
@@ -66,13 +70,13 @@ jobs:
 
       - name: Import Project
         working-directory: ${{runner.workspace}}/xonix/game
-        run: godot --headless --editor --quit
+        run: ".${{steps.editor.PATH}}" --headless --editor --quit
 
       - name: Export
         working-directory: ${{runner.workspace}}/xonix/game
         run: |
           mkdir "../export"
-          godot --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
+          ".${{steps.editor.PATH}}" --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
