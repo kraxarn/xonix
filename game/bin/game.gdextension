@@ -5,7 +5,7 @@ compatibility_minimum = 4.1
 
 [libraries]
 
-linux.debug.x86_64 = "res://bin/libxonix-debug.so"
+linux.debug.x86_64 = "res://bin/libxonix.so"
 linux.release.x86_64 = "res://bin/libxonix.so"
-macos.debug = "res://bin/libxonix-debug.dylib"
+macos.debug = "res://bin/libxonix.dylib"
 macos.release = "res://bin/libxonix.dylib"

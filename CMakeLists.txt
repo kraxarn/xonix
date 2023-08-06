@@ -15,13 +15,6 @@ FetchContent_MakeAvailable(godot-cpp)
 # Create library
 add_library(${PROJECT_NAME} SHARED)
 
-# Add -debug suffix to debug builds
-if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
-	string(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
-	set_target_properties(${PROJECT_NAME} PROPERTIES
-		OUTPUT_NAME "${PROJECT_NAME}-${BUILD_TYPE}")
-endif ()
-
 # Add source files
 add_subdirectory(src)
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
