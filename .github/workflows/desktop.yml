@@ -57,7 +57,9 @@ jobs:
 
       - name: Export
         working-directory: ${{runner.workspace}}/xonix/game
-        run: ./godot --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
+        run: |
+          mkdir "../export"
+          ./godot --headless --export-release "${{matrix.edition}}" "../export/${{matrix.output}}"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
