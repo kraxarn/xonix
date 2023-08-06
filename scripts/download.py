@@ -104,7 +104,7 @@ if args.install and args.type == "export-templates":
 		case "darwin":
 			template_path = pathlib.Path.home().joinpath("Library", "Application Support", "Godot", "export_templates")
 		case "win32":
-			template_path = pathlib.Path.home().joinpath("AppData", "Local", "Godot", "export_templates")
+			template_path = pathlib.Path.home().joinpath("AppData", "Roaming", "Godot", "export_templates")
 		case _:
 			sys.exit(f"unknown platform: {sys.platform}")
 	print(f"install: {template_path}")
