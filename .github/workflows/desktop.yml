@@ -41,12 +41,12 @@ jobs:
 
       - name: Download Editor
         run: |
-          python scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{matrix.edition}}"
+          python3 scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{matrix.edition}}"
           mv "Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" "./game/godot"
           chmod +x "./game/godot"
 
       - name: Download Export Templates
-        run: python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
+        run: python3 scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
 
       - name: Configure CMake
         run: cmake . -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}"
