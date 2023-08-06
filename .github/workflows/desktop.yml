@@ -42,6 +42,10 @@ jobs:
           path: Godot*export_templates.tpz
           key: godot-${{env.GODOT_VERSION}}-export-templates
 
+      - name: Install Dependencies (Windows)
+        if: runner.os == 'Windows'
+        run: choco install python
+
       - name: Install Dependencies
         run: pip3 install requests
 
