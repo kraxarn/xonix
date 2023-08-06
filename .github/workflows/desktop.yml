@@ -54,6 +54,7 @@ jobs:
 
       - name: Prepare Editor
         id: editor
+        shell: bash
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
               chmod +x "./Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64"
