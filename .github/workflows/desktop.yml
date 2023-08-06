@@ -28,6 +28,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ">=3.10"
+
       - name: Cache Godot
         uses: actions/cache@v3
         with:
@@ -43,12 +47,9 @@ jobs:
           key: godot-${{env.GODOT_VERSION}}-export-templates
 
       - name: Install Dependencies
-        run: pip3 install requests
+        run: pip install requests
 
       - name: Download Editor
-        uses: actions/setup-python@v4
-        with:
-          python-version: ">=3.10"
         run: python scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{matrix.edition}}"
 
       - name: Prepare Editor
@@ -65,9 +66,6 @@ jobs:
           fi
 
       - name: Download Export Templates
-        uses: actions/setup-python@v4
-        with:
-          python-version: ">=3.10"
         run: python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
 
       - name: Configure CMake
