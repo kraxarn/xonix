@@ -16,6 +16,9 @@ jobs:
           - os: ubuntu-22.04
             edition: "linux.x86_64"
             output: "xonix.x86_64"
+          - os: macos-latest
+            edition: "macos.universal"
+            output: "xonix.zip"
 
     runs-on: ${{matrix.os}}
 
