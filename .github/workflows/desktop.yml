@@ -76,10 +76,12 @@ jobs:
         run: cmake --build . --config ${{env.BUILD_TYPE}}
 
       - name: Import Project
+        shell: bash
         working-directory: ${{runner.workspace}}/xonix/game
         run: ${{steps.editor.outputs.PATH}} --headless --editor --quit || true
 
       - name: Export
+        shell: bash
         working-directory: ${{runner.workspace}}/xonix/game
         run: |
           mkdir "../export"
