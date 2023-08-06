@@ -96,17 +96,26 @@ if args.verify:
 if args.extract:
 	extract(download_filename)
 
-if args.type == "export-templates" and args.install:
-	template_path: pathlib.Path
-	match sys.platform:
-		case "linux":
-			template_path = pathlib.Path.home().joinpath(".local", "share", "godot", "export_templates")
-		case "darwin":
-			template_path = pathlib.Path.home().joinpath("Library", "Application Support", "Godot", "export_templates")
-		case "win32":
-			template_path = pathlib.Path.home().joinpath("AppData", "Local", "Godot", "export_templates")
-		case _:
-			sys.exit(f"unknown platform: {sys.platform}")
-	print(f"install: {template_path}")
-	os.makedirs(template_path)
-	shutil.move("templates", template_path.joinpath(f"{godot_version}.stable"))
+if args.install:
+	if args.type == "editor":
+		godot_path: pathlib.Path
+		if sys.platform == "darwin":
+			godot_path = pathlib.Path().joinpath("Godot.app", "Contents", "MacOS")
+		else:
+			godot_path = pathlib.Path()
+		print(f"install: {godot_path}")
+		os.environ["PATH"] += f"{os.pathsep}{godot_path}"
+	elif args.type == "export-templates":
+		template_path: pathlib.Path
+		match sys.platform:
+			case "linux":
+				template_path = pathlib.Path.home().joinpath(".local", "share", "godot", "export_templates")
+			case "darwin":
+				template_path = pathlib.Path.home().joinpath("Library", "Application Support", "Godot", "export_templates")
+			case "win32":
+				template_path = pathlib.Path.home().joinpath("AppData", "Local", "Godot", "export_templates")
+			case _:
+				sys.exit(f"unknown platform: {sys.platform}")
+		print(f"install: {template_path}")
+		os.makedirs(template_path)
+		shutil.move("templates", template_path.joinpath(f"{godot_version}.stable"))
