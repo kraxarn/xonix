@@ -39,6 +39,9 @@ jobs:
           path: Godot*export_templates.tpz
           key: godot-${{env.GODOT_VERSION}}-export-templates
 
+      - name: Install Dependencies
+        run: pip3 install requests
+
       - name: Download Editor
         run: |
           python3 scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{matrix.edition}}"
