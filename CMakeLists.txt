@@ -16,7 +16,7 @@ FetchContent_MakeAvailable(godot-cpp)
 add_library(${PROJECT_NAME} SHARED)
 
 # Add -debug suffix to debug builds
-if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
+if ("${CMAKE_BUILD_TYPE}" STREQUAL "Debug")
 	string(TOLOWER "${CMAKE_BUILD_TYPE}" BUILD_TYPE)
 	set_target_properties(${PROJECT_NAME} PROPERTIES
 		OUTPUT_NAME "${PROJECT_NAME}-${BUILD_TYPE}")
