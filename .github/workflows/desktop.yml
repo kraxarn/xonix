@@ -50,10 +50,10 @@ jobs:
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
               chmod +x "./Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64"
-              echo "PATH=./Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" >> "$GITHUB_OUTPUT"
+              echo "PATH=$PWD/Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" >> "$GITHUB_OUTPUT"
           elif [ "$RUNNER_OS" == "macOS" ]; then
               chmod +x "./Godot.app/Contents/MacOS/Godot"
-              echo "PATH=./Godot.app/Contents/MacOS/Godot" >> "$GITHUB_OUTPUT"
+              echo "PATH=$PWD/Godot.app/Contents/MacOS/Godot" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Download Export Templates
