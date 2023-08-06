@@ -19,6 +19,9 @@ jobs:
           - os: macos-latest
             edition: "macos.universal"
             output: "xonix.dmg"
+          - os: windows-latest
+            edition: "win64.exe"
+            output: "xonix.exe"
 
     runs-on: ${{matrix.os}}
 
@@ -54,6 +57,8 @@ jobs:
           elif [ "$RUNNER_OS" == "macOS" ]; then
               chmod +x "./Godot.app/Contents/MacOS/Godot"
               echo "PATH=$PWD/Godot.app/Contents/MacOS/Godot" >> "$GITHUB_OUTPUT"
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+              echo "PATH=$PWD/Godot_v${{env.GODOT_VERSION}}-stable_win64.exe" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Download Export Templates
