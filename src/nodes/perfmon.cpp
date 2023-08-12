@@ -1,4 +1,5 @@
 #include "nodes/perfmon.hpp"
+#include "util.hpp"
 
 #include <godot_cpp/classes/performance.hpp>
 
@@ -29,6 +30,11 @@ void PerfMon::_ready()
 void PerfMon::_process(double delta)
 {
 	Node::_process(delta);
+
+	if (util::is_editor())
+	{
+		return;
+	}
 
 	constexpr int milli = 1'000;
 	auto *performance = godot::Performance::get_singleton();
