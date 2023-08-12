@@ -18,6 +18,8 @@ jobs:
         with:
           python-version: ">=3.10"
 
+      - uses: android-actions/setup-android@v2
+
       - name: Cache Godot
         uses: actions/cache@v3
         with:
@@ -48,6 +50,14 @@ jobs:
 
       - name: Download Export Templates
         run: python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
+
+      - name: Prepare Editor Settings
+        run: |
+          mkdir -p "$HOME/.config/godot"
+          set CONFIG_PATH="$HOME/.config/godot/editor_settings-4.tres"
+          echo "[gd_resource type=\"EditorSettings\" format=3]" > "$CONFIG_PATH"
+          echo "[resource]" >> "$CONFIG_PATH"
+          echo "export/android/android_sdk_path = \"/usr/local/lib/android/sdk\""
 
       - name: Prepare Build (Host)
         run: cmake -E make_directory build
