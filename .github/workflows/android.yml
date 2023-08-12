@@ -23,6 +23,7 @@ jobs:
         with:
           path: |
             _deps
+            build/_deps
             Godot*.zip
           key: godot-${{env.GODOT_VERSION}}-android-${{env.GODOT_EDITION}}
 
