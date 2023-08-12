@@ -48,6 +48,17 @@ jobs:
       - name: Download Export Templates
         run: python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
 
+      - name: Prepare Build (Host)
+        run: cmake -E make_directory build
+
+      - name: Configure CMake (Host)
+        working-directory: ${{runner.workspace}}/xonix/build
+        run: cmake .. -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}"
+
+      - name: Build (Host)
+        working-directory: ${{runner.workspace}}/xonix/build
+        run: cmake --build . --config ${{env.BUILD_TYPE}}
+
       - name: Configure CMake
         run: cmake . -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" -DCMAKE_SYSTEM_NAME="Android" -DCMAKE_ANDROID_ARCH_ABI="arm64-v8a" -DCMAKE_ANDROID_NDK="${{env.ANDROID_NDK_LATEST_HOME}}"
 
