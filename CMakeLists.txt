@@ -25,6 +25,17 @@ endif ()
 add_subdirectory(src)
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
+# IPO / LTO
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+	include(CheckIPOSupported)
+	check_ipo_supported(RESULT ipo_supported OUTPUT ipo_error)
+	if (ipo_supported)
+		set_property(TARGET ${PROJECT_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+	else ()
+		message(STATUS "LTO error: ${ipo_error}")
+	endif ()
+endif ()
+
 # Link godot-cpp
 target_link_libraries(${PROJECT_NAME} PUBLIC godot::cpp)
 
