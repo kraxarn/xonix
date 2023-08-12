@@ -67,7 +67,7 @@ jobs:
         working-directory: ${{runner.workspace}}/xonix/game
         env:
           GODOT_ANDROID_KEYSTORE_RELEASE_PATH: "${{runner.workspace}}/xonix/release.keystore"
-          GODOT_ANDROID_KEYSTORE_RELEASE_USER: "${{secrets.KEYSTORE_USER}}"
+          GODOT_ANDROID_KEYSTORE_RELEASE_USER: "xonix"
           GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: "${{secrets.KEYSTORE_PASSWORD}}"
         run: |
           mkdir "../export"
