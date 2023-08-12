@@ -15,6 +15,12 @@ FetchContent_MakeAvailable(godot-cpp)
 # Create library
 add_library(${PROJECT_NAME} SHARED)
 
+# Add -android suffix to differentiate from Linux builds
+if (ANDROID)
+	set_target_properties(${PROJECT_NAME} PROPERTIES
+		OUTPUT_NAME "${PROJECT_NAME}-android")
+endif ()
+
 # Add source files
 add_subdirectory(src)
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/src")

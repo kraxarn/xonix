@@ -1,0 +1,80 @@
+name: Android
+
+on: [ push, pull_request ]
+
+env:
+  BUILD_TYPE: "Release"
+  GODOT_VERSION: "4.1.1"
+  GODOT_EDITION: "linux.x86_64"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ">=3.10"
+
+      - name: Cache Godot
+        uses: actions/cache@v3
+        with:
+          path: |
+            _deps
+            Godot*.zip
+          key: godot-${{env.GODOT_VERSION}}-android-${{env.GODOT_EDITION}}
+
+      - name: Cache Export Templates
+        uses: actions/cache@v3
+        with:
+          path: Godot*export_templates.tpz
+          key: godot-${{env.GODOT_VERSION}}-export-templates
+
+      - name: Install Dependencies
+        run: pip install requests
+
+      - name: Download Editor
+        run: python scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{env.GODOT_EDITION}}"
+
+      - name: Prepare Editor
+        id: editor
+        shell: bash
+        run: |
+          chmod +x "./Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64"
+          echo "PATH=$PWD/Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" >> "$GITHUB_OUTPUT"
+
+      - name: Download Export Templates
+        run: python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
+
+      - name: Configure CMake
+        run: cmake . -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}" -DCMAKE_SYSTEM_NAME="Android" -DCMAKE_ANDROID_ARCH_ABI="arm64-v8a" -DCMAKE_ANDROID_NDK="${{env.ANDROID_NDK_LATEST_HOME}}"
+
+      - name: Build
+        run: cmake --build . --config ${{env.BUILD_TYPE}}
+
+      - name: Prepare Keystore
+        run: echo -n "${{secrets.KEYSTORE_FILE}}" | base64 -d > "release.keystore"
+
+      - name: Import Project
+        shell: bash
+        working-directory: ${{runner.workspace}}/xonix/game
+        run: ${{steps.editor.outputs.PATH}} --headless --editor --quit || true
+
+      - name: Export
+        shell: bash
+        working-directory: ${{runner.workspace}}/xonix/game
+        env:
+          GODOT_ANDROID_KEYSTORE_RELEASE_PATH: "${{runner.workspace}}/xonix/release.keystore"
+          GODOT_ANDROID_KEYSTORE_RELEASE_USER: "${{secrets.KEYSTORE_USER}}"
+          GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: "${{secrets.KEYSTORE_PASSWORD}}"
+        run: |
+          mkdir "../export"
+          ${{steps.editor.outputs.PATH}} --headless --export-release "android" "../export/xonix.apk" || true
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: xonix-android
+          path: export/*.apk

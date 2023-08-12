@@ -21,3 +21,6 @@ godot.zip
 godot/
 templates.zip
 templates/
+
+# Android keystores
+*.keystore
