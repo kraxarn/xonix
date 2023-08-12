@@ -18,7 +18,7 @@ add_library(${PROJECT_NAME} SHARED)
 # Add -android suffix to differentiate from Linux builds
 if (ANDROID)
 	set_target_properties(${PROJECT_NAME} PROPERTIES
-		OUTPUT_NAME "${PROJECT_NAME}-android")
+		OUTPUT_NAME "${PROJECT_NAME}_android")
 endif ()
 
 # Add source files
