@@ -72,8 +72,8 @@ jobs:
       - name: Prepare Project
         working-directory: ${{runner.workspace}}/xonix/game
         env:
-          TEMPLATE_PATH: "$HOME/.local/share/godot/export_templates/$GODOT_VERSION.stable/web_dlink_release.zip"
-        run: sed -i 's/custom_template\/release=\"\"/custom_template\/release=\"$TEMPLATE_PATH\"/g' "export_presets.cfg"
+          TEMPLATE_PATH: "~/.local/share/godot/export_templates/${{env.GODOT_VERSION}}.stable/web_dlink_release.zip"
+        run: sed -i 's/custom_template\/release=\"\"/custom_template\/release=\"${{env.TEMPLATE_PATH}}\"/g' "export_presets.cfg"
 
       - name: Import Project
         shell: bash
