@@ -69,12 +69,6 @@ jobs:
       - name: Build
         run: cmake --build . --config ${{env.BUILD_TYPE}}
 
-      - name: Prepare Project
-        working-directory: ${{runner.workspace}}/xonix/game
-        env:
-          TEMPLATE_PATH: "\/home\/runner\/.local\/share\/godot\/export_templates\/${{env.GODOT_VERSION}}.stable\/web_dlink_release.zip"
-        run: sed -i 's/custom_template\/release=\"\"/custom_template\/release=\"${{env.TEMPLATE_PATH}}\"/g' "export_presets.cfg"
-
       - name: Import Project
         shell: bash
         working-directory: ${{runner.workspace}}/xonix/game
