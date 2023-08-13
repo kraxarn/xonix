@@ -81,6 +81,12 @@ jobs:
           mkdir "../export"
           ${{steps.editor.outputs.PATH}} --headless --export-release "web" "../export/index.html" || true
 
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: 'export'
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
