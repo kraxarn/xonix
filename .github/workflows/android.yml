@@ -57,7 +57,7 @@ jobs:
           export CONFIG_PATH="$HOME/.config/godot/editor_settings-4.tres"
           echo "[gd_resource type=\"EditorSettings\" format=3]" > "$CONFIG_PATH"
           echo "[resource]" >> "$CONFIG_PATH"
-          echo "export/android/android_sdk_path = \"/usr/local/lib/android/sdk\"" >> "$CONFIG_PATH"
+          echo "export/android/android_sdk_path = \"$ANDROID_SDK_ROOT\"" >> "$CONFIG_PATH"
 
       - name: Prepare Build (Host)
         run: cmake -E make_directory build
