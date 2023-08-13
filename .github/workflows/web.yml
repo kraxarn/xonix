@@ -70,9 +70,10 @@ jobs:
         run: cmake --build . --config ${{env.BUILD_TYPE}}
 
       - name: Prepare Project
+        working-directory: ${{runner.workspace}}/xonix/game
         env:
           TEMPLATE_PATH: "$HOME/.local/share/godot/export_templates/$GODOT_VERSION.stable/web_dlink_release.zip"
-        run: sed -i '' -e 's/custom_template\/release=\"\"/custom_template\/release=\"$TEMPLATE_PATH\"/g' "game/export_presets.cfg"
+        run: sed -i 's/custom_template\/release=\"\"/custom_template\/release=\"$TEMPLATE_PATH\"/g' "export_presets.cfg"
 
       - name: Import Project
         shell: bash
