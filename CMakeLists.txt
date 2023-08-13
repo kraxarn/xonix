@@ -45,7 +45,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
 endif ()
 
 # Link godot-cpp
-target_link_libraries(${PROJECT_NAME} PUBLIC godot::cpp)
+target_link_libraries(${PROJECT_NAME} PRIVATE godot::cpp)
 
 # Copy files to Godot after build
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
