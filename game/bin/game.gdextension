@@ -5,11 +5,7 @@ compatibility_minimum = 4.1
 
 [libraries]
 
-linux.debug.x86_64 = "res://bin/libxonix.so"
-linux.release.x86_64 = "res://bin/libxonix.so"
-macos.debug = "res://bin/libxonix.dylib"
-macos.release = "res://bin/libxonix.dylib"
-windows.debug.x86_64 = "res://bin/xonix.dll"
-windows.release.x86_64 = "res://bin/xonix.dll"
-android.debug.arm64 = "res://bin/libxonix_android.so"
-android.release.arm64 = "res://bin/libxonix_android.so"
+linux.x86_64 = "res://bin/libxonix.so"
+macos = "res://bin/libxonix.dylib"
+windows.x86_64 = "res://bin/xonix.dll"
+android.arm64 = "res://bin/libxonix_android.so"
