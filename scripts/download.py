@@ -14,9 +14,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument("type", choices=["editor", "export-templates"])
 parser.add_argument("--godot-version", required=True)
 parser.add_argument("--godot-edition")
-parser.add_argument("--verify", type=bool, default=True)
-parser.add_argument("--extract", type=bool, default=True)
-parser.add_argument("--install", type=bool, default=True)
+parser.add_argument("--verify", type=bool, default=True, action=argparse.BooleanOptionalAction)
+parser.add_argument("--extract", type=bool, default=True, action=argparse.BooleanOptionalAction)
+parser.add_argument("--install", type=bool, default=True, action=argparse.BooleanOptionalAction)
 
 args = parser.parse_args()
 godot_version: typing.Optional[str] = args.godot_version
