@@ -78,6 +78,7 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/xonix/game
         run: |
+          python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}" --no-install
           mkdir "../export"
           ${{steps.editor.outputs.PATH}} --headless --export-release "web" "../export/index.html" || true
 
