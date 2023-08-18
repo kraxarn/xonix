@@ -42,7 +42,7 @@ jobs:
         run: pip install requests
 
       - name: Install Emscripten
-        working-directory: ${{runner.workspace}}/emsdk
+        working-directory: ${{runner.workspace}}/xonix/emsdk
         run: |
           ./emsdk install latest
           ./emsdk activate latest
