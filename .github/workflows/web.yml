@@ -14,6 +14,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: actions/checkout@v3
+        with:
+          repository: 'emscripten-core/emsdk'
+
       - uses: actions/setup-python@v4
         with:
           python-version: ">=3.10"
@@ -37,7 +41,11 @@ jobs:
         run: pip install requests
 
       - name: Install Emscripten
-        run: sudo apt install emscripten
+        working-directory: ${{runner.workspace}}/emsdk
+        run: |
+          ./emsdk install latest
+          ./emsdk activate latest
+          source ./emsdk_env.sh
 
       - name: Download Editor
         run: python scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{env.GODOT_EDITION}}"
