@@ -18,7 +18,7 @@ if (EMSCRIPTEN)
 	set(CMAKE_EXECUTABLE_SUFFIX ".wasm")
 	set_target_properties(${PROJECT_NAME} PROPERTIES
 		COMPILE_FLAGS "-Os -s SIDE_MODULE=2"
-		LINK_FLAGS "-Os -s WASM=1 -s SIDE_MODULE=2 -s SHARED_MEMORY=1 -s STANDALONE_WASM --no-entry")
+		LINK_FLAGS "-Os -s WASM=1 -s SIDE_MODULE=2 -s STANDALONE_WASM --no-entry")
 else ()
 	add_library(${PROJECT_NAME} SHARED)
 endif ()
