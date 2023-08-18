@@ -50,7 +50,7 @@ jobs:
           echo "PATH=$PWD/Godot_v${{env.GODOT_VERSION}}-stable_linux.x86_64" >> "$GITHUB_OUTPUT"
 
       - name: Download Export Templates
-        run: python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}"
+        run: python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}" --no-install
 
       - name: Prepare Build (Host)
         run: cmake -E make_directory build
@@ -73,9 +73,6 @@ jobs:
         shell: bash
         working-directory: ${{runner.workspace}}/xonix/game
         run: ${{steps.editor.outputs.PATH}} --headless --editor --quit || true
-
-      - name: Prepare Project
-        run: python scripts/download.py export-templates --godot-version "${{env.GODOT_VERSION}}" --no-install
 
       - name: Export
         shell: bash
