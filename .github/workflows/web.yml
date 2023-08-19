@@ -25,6 +25,7 @@ jobs:
         id: emcc
         run: |
           export EMCC_VERSION="$(emcc --version | awk 'NR==1{print $10}')"
+          echo "Using Emscripten $EMCC_VERSION"
           echo "VERSION=$EMCC_VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Cache Godot
