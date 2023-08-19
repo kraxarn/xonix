@@ -18,7 +18,7 @@ if (EMSCRIPTEN)
 	set(CMAKE_EXECUTABLE_SUFFIX ".wasm")
 	# https://github.com/godotengine/godot/blob/master/platform/web/SCsub
 	set_target_properties(${PROJECT_NAME} PROPERTIES
-		COMPILE_FLAGS "-O3 -DNDEBUG -s SIDE_MODULE=1 -s USE_PTHREADS=1"
+		COMPILE_FLAGS "-O3 -s SIDE_MODULE=1 -pthread"
 		LINK_FLAGS "-O3 -s SIDE_MODULE=1 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=8 -s WASM_MEM_MAX=2048MB")
 	target_compile_definitions(${PROJECT_NAME} PRIVATE PTHREAD_NO_RENAME)
 else ()
