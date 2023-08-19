@@ -32,10 +32,15 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            _deps
             build/_deps
             Godot*.zip
-          key: godot-${{env.GODOT_VERSION}}-em-${{steps.emcc.outputs.VERSION}}-web-${{env.GODOT_EDITION}}
+          key: godot-${{env.GODOT_VERSION}}-${{env.GODOT_EDITION}}
+
+      - name: Cache Godot web
+        uses: actions/cache@v3
+        with:
+          path: _deps
+          key: godot-${{env.GODOT_VERSION}}-em-${{steps.emcc.outputs.VERSION}}-${{env.GODOT_EDITION}}
 
       - name: Cache Export Templates
         uses: actions/cache@v3
