@@ -16,9 +16,11 @@ FetchContent_MakeAvailable(godot-cpp)
 if (EMSCRIPTEN)
 	add_executable(${PROJECT_NAME})
 	set(CMAKE_EXECUTABLE_SUFFIX ".wasm")
+	# https://github.com/godotengine/godot/blob/master/platform/web/SCsub
 	set_target_properties(${PROJECT_NAME} PROPERTIES
-		COMPILE_FLAGS "-Os -s SIDE_MODULE=2"
-		LINK_FLAGS "-Os -s WASM=1 -s SIDE_MODULE=2 -s STANDALONE_WASM --no-entry")
+		COMPILE_FLAGS "-O3 -DNDEBUG -s SIDE_MODULE=1 -s USE_PTHREADS=1"
+		LINK_FLAGS "-O3 -s SIDE_MODULE=1 -s USE_PTHREADS=1 -s PTHREAD_POOL_SIZE=8 -s WASM_MEM_MAX=2048MB")
+	target_compile_definitions(${PROJECT_NAME} PRIVATE PTHREAD_NO_RENAME)
 else ()
 	add_library(${PROJECT_NAME} SHARED)
 endif ()
