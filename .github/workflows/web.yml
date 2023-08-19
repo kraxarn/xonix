@@ -6,6 +6,8 @@ env:
   BUILD_TYPE: "Release"
   GODOT_VERSION: "4.1.1"
   GODOT_EDITION: "linux.x86_64"
+  # https://github.com/godotengine/godot/blob/4.1/.github/workflows/web_builds.yml
+  EM_VERSION: "3.1.18"
 
 jobs:
   build:
@@ -13,11 +15,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
-      - uses: actions/checkout@v3
-        with:
-          repository: 'emscripten-core/emsdk'
-          path: 'emsdk'
 
       - uses: actions/setup-python@v4
         with:
@@ -42,10 +39,9 @@ jobs:
         run: pip install requests
 
       - name: Install Emscripten
-        working-directory: ${{runner.workspace}}/xonix/emsdk
-        run: |
-          ./emsdk install latest
-          ./emsdk activate latest
+        uses: mymindstorm/setup-emsdk@v12
+        with:
+          version: ${{env.EM_VERSION}}
 
       - name: Download Editor
         run: python scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{env.GODOT_EDITION}}"
@@ -72,9 +68,7 @@ jobs:
         run: cmake --build . --config ${{env.BUILD_TYPE}}
 
       - name: Configure CMake
-        run: |
-          source ./emsdk/emsdk_env.sh
-          emcmake cmake . -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}"
+        run: emcmake cmake . -DCMAKE_BUILD_TYPE="${{env.BUILD_TYPE}}"
 
       - name: Build
         run: cmake --build . --config ${{env.BUILD_TYPE}}
