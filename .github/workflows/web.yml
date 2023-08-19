@@ -27,7 +27,7 @@ jobs:
             _deps
             build/_deps
             Godot*.zip
-          key: godot-${{env.GODOT_VERSION}}-web-${{env.GODOT_EDITION}}
+          key: godot-${{env.GODOT_VERSION}}-em-${{env.EM_VERSION}}-web-${{env.GODOT_EDITION}}
 
       - name: Cache Export Templates
         uses: actions/cache@v3
