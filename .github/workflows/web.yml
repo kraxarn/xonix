@@ -6,8 +6,6 @@ env:
   BUILD_TYPE: "Release"
   GODOT_VERSION: "4.1.1"
   GODOT_EDITION: "linux.x86_64"
-  # https://github.com/godotengine/godot/blob/4.1/.github/workflows/web_builds.yml
-  EM_VERSION: "3.1.18"
 
 jobs:
   build:
@@ -20,6 +18,15 @@ jobs:
         with:
           python-version: ">=3.10"
 
+      - name: Install Emscripten
+        uses: mymindstorm/setup-emsdk@v12
+
+      - name: Set Emscripten version
+        id: emcc
+        run: |
+          export EMCC_VERSION="$(emcc --version | awk 'NR==1{print $10}')"
+          echo "VERSION=$EMCC_VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Cache Godot
         uses: actions/cache@v3
         with:
@@ -27,7 +34,7 @@ jobs:
             _deps
             build/_deps
             Godot*.zip
-          key: godot-${{env.GODOT_VERSION}}-em-${{env.EM_VERSION}}-web-${{env.GODOT_EDITION}}
+          key: godot-${{env.GODOT_VERSION}}-em-${{steps.emcc.outputs.VERSION}}-web-${{env.GODOT_EDITION}}
 
       - name: Cache Export Templates
         uses: actions/cache@v3
@@ -37,11 +44,6 @@ jobs:
 
       - name: Install Dependencies
         run: pip install requests
-
-      - name: Install Emscripten
-        uses: mymindstorm/setup-emsdk@v12
-        with:
-          version: ${{env.EM_VERSION}}
 
       - name: Download Editor
         run: python scripts/download.py editor --godot-version "${{env.GODOT_VERSION}}" --godot-edition "${{env.GODOT_EDITION}}"
