@@ -17,6 +17,8 @@ if (EMSCRIPTEN)
 	add_executable(${PROJECT_NAME})
 	set(CMAKE_EXECUTABLE_SUFFIX ".wasm")
 	# https://github.com/godotengine/godot/blob/master/platform/web/SCsub
+	set_target_properties(godot-cpp PROPERTIES
+		COMPILE_FLAGS "-mbulk-memory -matomics")
 	set_target_properties(${PROJECT_NAME} PROPERTIES
 		COMPILE_FLAGS "-O3 -s SIDE_MODULE=2 -s SHARED_MEMORY=1 -mbulk-memory -matomics"
 		LINK_FLAGS "-O3 -s SIDE_MODULE=2 -s SHARED_MEMORY=1 -mbulk-memory -matomics -s WASM_MEM_MAX=2048MB")
